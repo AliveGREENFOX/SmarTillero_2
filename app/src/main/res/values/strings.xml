@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">SmarTillero</string>
+    <string name="title_activity_basic_menu">BasicMenu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    //Inicio
+    <string name="button_start">Iniciar sesion</string>
+    <string name="button_new_profile">Nuevo usuario</string>
+    <string name="wel">Bienvenido</string>
+    <string name="User">Usuario</string>
+    <string name="Password">Contraseña</string>
+    <string name="Remember">Recordar mi información</string>
+
+    <string name="Checkbox">com.example.smartillero.Checkbox</string>
+    <string name="Name">com.example.smartillero.Name</string>
+    <string name="Pass">com.example.smartillero.Password</string>
+
+    //Settings
+    <string name="button_new_medicine">Nueva medicina</string>
+    <string name="button_delete_medicine">Borrar medicina</string>
+    <string name="button_edit_medicine">Editar medicina</string>
+
+    <string name="night_mode">Modo nocturno</string>
+
+    //Edicion
+    <string name="med_name">Nombre del medicamento</string>
+    <string name="med_num">Veces que se toma al día</string>
+    <string name="med_time">Cada cuantas horas toma el medicamento</string>
+    <string name="add_med">Añadir</string>
+    <string name="num_1">1</string>
+    <string name="num_2">2</string>
+    <string name="num_3">3</string>
+    <string name="num_4">4</string>
+    <string name="num_otro">Otro:</string>
+    <string name="save">Guardar</string>
+
+
+//////////////////////////////////////////////////////////////////////////////////
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edicion">Edicion</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+</resources>

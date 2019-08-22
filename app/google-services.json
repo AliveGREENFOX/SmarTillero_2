@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "339160945033",
+    "firebase_url": "https://smartillero-4883c.firebaseio.com",
+    "project_id": "smartillero-4883c",
+    "storage_bucket": "smartillero-4883c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339160945033:android:d7120e86d903ff1a",
+        "android_client_info": {
+          "package_name": "com.example.smartillero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339160945033-v25b9trh5mm83us65o3n2ah8dptec593.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartillero",
+            "certificate_hash": "0cabedc76215411287721d74cb181ff5c852a6c2"
+          }
+        },
+        {
+          "client_id": "339160945033-9jtan5np55nlcchk98ncbthhhj7fcio4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXbRwkpPsRLdF8dblm35_SRU2E9SbysDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339160945033-9jtan5np55nlcchk98ncbthhhj7fcio4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
