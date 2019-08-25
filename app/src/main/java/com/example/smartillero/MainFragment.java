@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,7 +36,7 @@ public class MainFragment extends Fragment
     private ListView Alarms;
     Button Med1, Med2, Med3;
     TextView Texto2;
-    private DatabaseReference DataRef;
+     private DatabaseReference Smart;
 
     public static ArrayList<String> MedsName = new ArrayList<>();
     @Override
@@ -41,7 +45,7 @@ public class MainFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main,container,false);
 
-        DataRef = FirebaseDatabase.getInstance().getReference();
+        Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
 
         MedsName = new ArrayList<>();
         Med1 = (Button)view.findViewById(R.id.Med1);
@@ -77,7 +81,9 @@ public class MainFragment extends Fragment
                 //1. Creamos un child en la ruta del obejeto
                 //2. Asignamos un valor al child
 
-                DataRef.child("Name").setValue("Ericka");
+                //Smart.child("Medicamentos").child("Algo").setValue("Ericka");
+                RegisterMeds();
+                //Readfromdatabase();
                 Texto2.setText("Cambio firebas?");
             }
         });
@@ -94,4 +100,41 @@ public class MainFragment extends Fragment
         Type TP = new TypeToken<ArrayList<String>>(){}.getType();
         MedsName = gson.fromJson(json, TP);
     }
+
+    public void RegisterMeds()
+    {
+        String name = "Genoprasol";
+        String nMeds = "2";
+        String tDay = "3";
+        String id = Smart.push().getKey();
+
+        Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay);
+        Smart.child("Pacientes").child(id).setValue(Receta);
+
+
+    }
+
+    public void Readfromdatabase()
+    {
+        // Read from the database
+        Smart.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("Valor:", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error)
+            {
+                // Failed to read value
+                Log.w("Valor:", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
 }
