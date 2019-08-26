@@ -33,6 +33,7 @@
     <string name="button_edit_medicine">Editar medicina</string>
 
     <string name="night_mode">Modo nocturno</string>
+    <string name="Bluetooth">Bluetooth</string>
 
     //Edicion
     <string name="med_name">Nombre del medicamento</string>
