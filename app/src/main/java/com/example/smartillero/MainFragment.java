@@ -82,9 +82,9 @@ public class MainFragment extends Fragment
                 //2. Asignamos un valor al child
 
                 //Smart.child("Medicamentos").child("Algo").setValue("Ericka");
-                RegisterMeds();
-                //Readfromdatabase();
-                Texto2.setText("Cambio firebas?");
+
+                Readfromdatabase();
+
             }
         });
 
@@ -101,18 +101,6 @@ public class MainFragment extends Fragment
         MedsName = gson.fromJson(json, TP);
     }
 
-    public void RegisterMeds()
-    {
-        String name = "Genoprasol";
-        String nMeds = "2";
-        String tDay = "3";
-        String id = Smart.push().getKey();
-
-        Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay);
-        Smart.child("Pacientes").child(id).setValue(Receta);
-
-
-    }
 
     public void Readfromdatabase()
     {
@@ -126,6 +114,8 @@ public class MainFragment extends Fragment
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
                 Log.d("Valor:", "Value is: " + value);
+
+                Texto2.setText(value);
             }
 
             @Override

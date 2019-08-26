@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -51,7 +53,7 @@ public class Edicion extends AppCompatActivity
     Button Add, Save;
     int Bandera_fragmento = 1;
     SharedPreferences SP;
-
+    private DatabaseReference Smart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +63,7 @@ public class Edicion extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
         Add = (Button)findViewById(R.id.AddMed);
         Save = (Button)findViewById(R.id.save_button);
 
@@ -113,6 +116,7 @@ public class Edicion extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                RegisterMeds();
                 Add_Flag = Add_Flag + 1;
                 String txt = Med.getText().toString().trim();
                 String txt_num = Num_Med.getText().toString().trim();
@@ -148,6 +152,7 @@ public class Edicion extends AppCompatActivity
                       //  SharedPreferences.Editor Borrar = SP.edit();
                       //  Borrar.remove("TaskList");
                       //  Borrar.commit();
+
                         SaveData();
                         Intent intent = new Intent(Edicion.this, BasicMenu.class);
                         intent.putExtra("Meds", Medicamentos);
@@ -156,6 +161,23 @@ public class Edicion extends AppCompatActivity
                     }
                 });
 /////////////////////////// /////////////////////////////////////////////////////////////////////////
+    }
+
+    public void RegisterMeds()  //Sends information to firebase
+    {
+        //String name = "Ericka";
+        //String nMeds = "2";
+        //String tDay = "3";
+        //String id = Smart.push().getKey();
+       String name = Med.getText().toString();
+       String nMeds = Num_Med.getText().toString();
+       String tDay = MedHours.getText().toString();
+       String id = Smart.push().getKey();
+
+        Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay);
+        Smart.child("Pacientes").child(id).setValue(Receta);
+
+
     }
 
     public void SaveData()
