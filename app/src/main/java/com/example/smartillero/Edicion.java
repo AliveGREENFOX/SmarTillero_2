@@ -84,7 +84,11 @@ public class Edicion extends AppCompatActivity
         RecoverData(); //Cada vez que guardamos un dato lo recuperamos en el array de prueba "MEDS_NAME"
 
         AA = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,Medicamentos);
-        Meds.setAdapter(AA);
+        if(Medicamentos != null && Medicamentos.size() > 0)
+        {
+            Meds.setAdapter(AA);
+        }
+
 
 /////////////////////////////////////// Borra y seleccion del listview ///////////////////////////////////////////////////////////////////////////
 
@@ -116,7 +120,7 @@ public class Edicion extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                RegisterMeds();
+               // RegisterMeds();
                 Add_Flag = Add_Flag + 1;
                 String txt = Med.getText().toString().trim();
                 String txt_num = Num_Med.getText().toString().trim();
@@ -128,7 +132,7 @@ public class Edicion extends AppCompatActivity
                 if (txt.length() !=0 && txt_num.length() != 0)
                 {
                     Medicamentos.add(txt);
-                    //Medicamentos_Temporal.add(txt);
+                    Medicamentos_Temporal.add(txt);
                     Med.setText("");
 
                     Numero_Meds.add(Txt_num);
@@ -149,9 +153,9 @@ public class Edicion extends AppCompatActivity
                     @Override
                     public void onClick(View view)
                     {
-                      //  SharedPreferences.Editor Borrar = SP.edit();
-                      //  Borrar.remove("TaskList");
-                      //  Borrar.commit();
+                        SharedPreferences.Editor Borrar = SP.edit();
+                        Borrar.remove("TaskList");
+                        Borrar.commit();
 
                         SaveData();
                         Intent intent = new Intent(Edicion.this, BasicMenu.class);
@@ -176,7 +180,6 @@ public class Edicion extends AppCompatActivity
 
         Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay);
         Smart.child("Pacientes").child(id).setValue(Receta);
-
 
     }
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class MainFragment extends Fragment
     private ListView Alarms;
     Button Med1, Med2, Med3;
     TextView Texto2;
+    EditText pruebaFB;
      private DatabaseReference Smart;
 
     public static ArrayList<String> MedsName = new ArrayList<>();
@@ -53,6 +55,7 @@ public class MainFragment extends Fragment
         Med3 = (Button)view.findViewById(R.id.Med3);
 
         Texto2 =(TextView)view.findViewById(R.id.textView2);
+        pruebaFB =(EditText)view.findViewById(R.id.editText3);
 
 ///////////////////////////////////////////////////////
 
@@ -63,7 +66,11 @@ public class MainFragment extends Fragment
         final ArrayAdapter Arrayadapter;
         Alarms = (ListView)view.findViewById(R.id.AlarmList); //Lista para mostrar las alarmas
         Arrayadapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,MedsName);
-        Alarms.setAdapter(Arrayadapter);
+
+        if(MedsName != null && MedsName.size() > 0)
+        {
+            Alarms.setAdapter(Arrayadapter);
+        }
 
       /*  Med1.setOnClickListener(new View.OnClickListener()
         {
@@ -81,7 +88,10 @@ public class MainFragment extends Fragment
                 //1. Creamos un child en la ruta del obejeto
                 //2. Asignamos un valor al child
 
-                //Smart.child("Medicamentos").child("Algo").setValue("Ericka");
+               // Smart.child("Medicamentos").child("Algo").setValue("Ericka");
+
+                String prueba = pruebaFB.getText().toString();
+                Smart.setValue(prueba);
 
                 Readfromdatabase();
 

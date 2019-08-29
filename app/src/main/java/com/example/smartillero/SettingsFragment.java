@@ -2,6 +2,7 @@ package com.example.smartillero;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -24,6 +25,40 @@ public class SettingsFragment extends Fragment
 {
     BluetoothAdapter BTA;
     private static final String TAG = "Settings";
+
+    // Create a BroadcastReceiver for ACTION_FOUND
+    private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver()
+    {
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            // When discovery finds a device
+            if (action.equals(BTA.ACTION_CONNECTION_STATE_CHANGED))
+            {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BTA.ERROR);
+                switch(state)
+                {
+                    case BluetoothAdapter.STATE_OFF:
+                        Log.d(TAG, "On receive state: OFF ");
+                        break;
+
+                    case BluetoothAdapter.STATE_ON:
+                        Log.d(TAG, "On receive state: ON ");
+                        break;
+
+                    case BluetoothAdapter.STATE_TURNING_OFF:
+                        Log.d(TAG, "On receive state: TURNING OFF ");
+                        break;
+
+                    case BluetoothAdapter.STATE_TURNING_ON:
+                        Log.d(TAG, "On receive state: TURNING ON ");
+                        break;
+                }
+
+            }
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
@@ -50,7 +85,7 @@ public class SettingsFragment extends Fragment
             public void onCheckedChanged(CompoundButton compoundButton, boolean b)
             {
                 Toast.makeText(getActivity(),"Principal 2", Toast.LENGTH_SHORT).show();
-                //EnableDisableBT();
+                EnableDisableBT();
             }
         });
 
@@ -65,15 +100,19 @@ public class SettingsFragment extends Fragment
         }
         if(!BTA.isEnabled()) //Enables BT
         {
+            Log.d(TAG, "ENABLE BT");
             Intent EnableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(EnableBT);
-        }
 
+            IntentFilter BtIntent = new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
+            getActivity().registerReceiver(mBroadcastReceiver1,BtIntent);
+        }
         if(BTA.isEnabled()) //Disables BT if enabled
         {
+            Log.d(TAG, "DISABLE BT");
             BTA.disable();
-            IntentFilter BTintent = new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
+            IntentFilter BtIntent = new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
+            getActivity().registerReceiver(mBroadcastReceiver1,BtIntent);
         }
-
     }
 }
