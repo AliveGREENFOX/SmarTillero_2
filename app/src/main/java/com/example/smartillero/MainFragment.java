@@ -1,6 +1,7 @@
 package com.example.smartillero;
 
 
+import android.app.AlarmManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +41,8 @@ public class MainFragment extends Fragment
     TextView Texto2;
     EditText pruebaFB;
      private DatabaseReference Smart;
+     private TimePicker clock;
+     private AlarmManager alarm;
 
     public static ArrayList<String> MedsName = new ArrayList<>();
     @Override
@@ -56,10 +60,15 @@ public class MainFragment extends Fragment
 
         Texto2 =(TextView)view.findViewById(R.id.textView2);
         pruebaFB =(EditText)view.findViewById(R.id.editText3);
+        clock = (TimePicker)view.findViewById(R.id.simpleTimePicker);
+
+
+
 
 ///////////////////////////////////////////////////////
 
         RecoverData();
+        Readfromdatabase();
 
 ///////////////////////////////////////////////////////////
 
@@ -72,14 +81,16 @@ public class MainFragment extends Fragment
             Alarms.setAdapter(Arrayadapter);
         }
 
-      /*  Med1.setOnClickListener(new View.OnClickListener()
+        Med1.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-
+                //Toast.makeText(getContext(), clock.getCurrentHour())
+                String hora = clock.getCurrentHour().toString();
+                Texto2.setText(hora);
             }
-        });*/
+        });
         Med2.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -100,7 +111,7 @@ public class MainFragment extends Fragment
 
         return view;
     }
-
+    //**************************************************************************************************//
     public void RecoverData()
     {
         SharedPreferences SP = this.getActivity().getSharedPreferences("SharedPrefs", getActivity(). MODE_PRIVATE);

@@ -1,5 +1,6 @@
 package com.example.smartillero;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.Transliterator;
@@ -36,7 +37,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Edicion extends AppCompatActivity
+public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnTimeSetListener
 {
 
     public static ArrayList<String> Medicamentos = new ArrayList<>();
@@ -120,7 +121,7 @@ public class Edicion extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-               // RegisterMeds();
+                RegisterMeds();
                 Add_Flag = Add_Flag + 1;
                 String txt = Med.getText().toString().trim();
                 String txt_num = Num_Med.getText().toString().trim();
@@ -169,10 +170,6 @@ public class Edicion extends AppCompatActivity
 
     public void RegisterMeds()  //Sends information to firebase
     {
-        //String name = "Ericka";
-        //String nMeds = "2";
-        //String tDay = "3";
-        //String id = Smart.push().getKey();
        String name = Med.getText().toString();
        String nMeds = Num_Med.getText().toString();
        String tDay = MedHours.getText().toString();
@@ -180,7 +177,6 @@ public class Edicion extends AppCompatActivity
 
         Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay);
         Smart.child("Pacientes").child(id).setValue(Receta);
-
     }
 
     public void SaveData()
@@ -191,20 +187,6 @@ public class Edicion extends AppCompatActivity
         String json = gson.toJson(Medicamentos);
         SPE.putString("TaskList", json);
         SPE.apply();
-
-       /* SharedPreferences SP_2 = getSharedPreferences("SharedCuantities",MODE_PRIVATE);
-        SP_2.edit();
-        Gson gson_2 = new Gson(); //variable para el numero de tomas
-        String json_2 = gson_2.toJson(Numero_Meds);
-        SPE.putString("Cantidades",json_2);
-
-        SharedPreferences SP_3 = getSharedPreferences("SharedHours",MODE_PRIVATE);
-        SP_3.edit();
-        Gson gson_3 = new Gson(); //variable para las horas entre tomas
-        String json_3 = gson_3.toJson(MedsTimes);
-        SPE.putString("Horas", json_3);*/
-
-        SPE.apply();
     }
 
     public void RecoverData()
@@ -214,18 +196,6 @@ public class Edicion extends AppCompatActivity
         String json = SP.getString("TaskList", null);
         Type TP = new TypeToken<ArrayList<String>>(){}.getType();
         Medicamentos = gson.fromJson(json, TP);
-
-       /* SharedPreferences SP_2 = this.getSharedPreferences("SharedCuantities", MODE_PRIVATE);
-        Gson gson_2 = new Gson(); //variable para el numero de tomas
-        String json_2 = SP.getString("Cantidades", null);
-        Type TP_2 = new TypeToken<ArrayList<String>>(){}.getType();
-        Numero_Meds = gson_2.fromJson(json_2,TP_2);
-
-        SharedPreferences SP_3 = getSharedPreferences("SharedHours",MODE_PRIVATE);
-        Gson gson_3 = new Gson();
-        String json_3 = SP.getString("Horas", null);
-        Type TP_3 = new TypeToken<ArrayList<String>>(){}.getType();
-        MedsTimes = gson_3.fromJson(json_3,TP_3);*/
     }
 
     private TextWatcher medsTextWatcher = new TextWatcher() //Evita que este activo el boton de guardado sin texto

@@ -39,6 +39,9 @@
     <string name="med_name">Nombre del medicamento</string>
     <string name="med_num">Veces que se toma al día</string>
     <string name="med_time">Cada cuantas horas toma el medicamento</string>
+    <string name="capsules">Cuantas pastillas/capsulas toma</string>
+
+
     <string name="add_med">Añadir</string>
     <string name="num_1">1</string>
     <string name="num_2">2</string>
