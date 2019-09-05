@@ -102,7 +102,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this,"Bienvenido", Toast.LENGTH_LONG).show();
                 //startActivity(new Intent(MainActivity.this,BasicMenu.class));
 
-                Intent intent = new Intent(MainActivity.this, BasicMenu.class);
+                //Intent intent = new Intent(MainActivity.this, BasicMenu.class);
+                Intent intent = new Intent(MainActivity.this, MainMenu.class);
                 int Fragmento = 1;
                 intent.putExtra("Fragmento",Fragmento);
                 startActivity(intent);

@@ -1,13 +1,9 @@
 package com.example.smartillero;
 
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.Transliterator;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -23,19 +19,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnTimeSetListener
 {
@@ -49,12 +38,13 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
     int Add_Flag = 0;
 
-    EditText Med, Num_Med, MedHours;
+    EditText Med, Num_Med, MedHours, Med_Caps;
     //String Meds_Temporal[];
     Button Add, Save;
     int Bandera_fragmento = 1;
     SharedPreferences SP;
     private DatabaseReference Smart;
+    int id_flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,18 +59,16 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         Save = (Button)findViewById(R.id.save_button);
 
         Med = (EditText)findViewById(R.id.InputMed);
-        Num_Med = (EditText)findViewById(R.id.InputNumMed);
+        Num_Med = (EditText)findViewById(R.id.InputTimeDay);
         MedHours = (EditText)findViewById(R.id.InputMedsTime);
+        Med_Caps = (EditText)findViewById(R.id.InputMedsNum);
+
 
         Meds = (ListView)findViewById(R.id.MedsList);
         final ArrayAdapter AA;
 
         AlertDialog.Builder Alerta = new AlertDialog.Builder(this);
         Alerta.setCancelable(true); Alerta.setTitle("Atención"); Alerta.setMessage("Desea eliminar el medicamento?");
-
-
-
-
 
         RecoverData(); //Cada vez que guardamos un dato lo recuperamos en el array de prueba "MEDS_NAME"
 
@@ -113,6 +101,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         Med.addTextChangedListener(medsTextWatcher);
         Num_Med.addTextChangedListener(medsTextWatcher);
         MedHours.addTextChangedListener(medsTextWatcher);
+        Med_Caps.addTextChangedListener(medsTextWatcher);
 
 /////////////////////////// Guarda los valores en el listview ///////////////////////////////////////////////////////////////
 
@@ -132,17 +121,19 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
                 if (txt.length() !=0 && txt_num.length() != 0)
                 {
-                    Medicamentos.add(txt);
-                    Medicamentos_Temporal.add(txt);
+                    //Medicamentos.add(txt);
+                    //Medicamentos_Temporal.add(txt);
                     Med.setText("");
 
-                    Numero_Meds.add(Txt_num);
+                    //Numero_Meds.add(Txt_num);
                     Num_Med.setText("");
 
-                    MedsTimes.add(Txt_Hours);
+                    //MedsTimes.add(Txt_Hours);
                     MedHours.setText("");
 
-                    AA.notifyDataSetChanged();
+                    Med_Caps.setText("");
+
+                    //AA.notifyDataSetChanged();
                 }
             }
         });
@@ -173,10 +164,16 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
        String name = Med.getText().toString();
        String nMeds = Num_Med.getText().toString();
        String tDay = MedHours.getText().toString();
-       String id = Smart.push().getKey();
+       String pTime = Med_Caps.getText().toString();
+        id_flag = id_flag + 1;
+        String id = Integer.toString(id_flag);
 
-        Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay);
-        Smart.child("Pacientes").child(id).setValue(Receta);
+       //String id = Smart.push().getKey();
+
+        Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay,pTime);
+
+        //Smart.child("Pacientes").child(id).setValue(Receta);
+        Smart.child(name).setValue(Receta);
     }
 
     public void SaveData()
