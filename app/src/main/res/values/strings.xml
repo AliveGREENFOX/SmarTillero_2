@@ -30,7 +30,10 @@
     //Settings
     <string name="button_new_medicine">Nueva medicina</string>
     <string name="button_delete_medicine">Borrar medicina</string>
-    <string name="button_edit_medicine">Editar medicina</string>
+    <string name="search">Buscar dispositivo</string>
+    <string name="detect">Activar deteccion</string>
+
+
 
     <string name="night_mode">Modo nocturno</string>
     <string name="Bluetooth">Bluetooth</string>

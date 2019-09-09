@@ -1,6 +1,7 @@
 package com.example.smartillero;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,9 +26,15 @@ public class SettingsFragment extends Fragment
 {
     BluetoothAdapter BTA;
     private static final String TAG = "Settings";
+    Button  BTN, BTN2, button_new;
+    Switch switch1;
+    private static final int REQUEST_ENABLE_BT = 0;
+    private static final int REQUEST_DISCOVER_BT = 1;
+    private static final int RESULT_OK = -1;
+    Activity act = getActivity();
 
     // Create a BroadcastReceiver for ACTION_FOUND
-    private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver()
+  /*  private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver()
     {
         public void onReceive(Context context, Intent intent)
         {
@@ -57,15 +64,21 @@ public class SettingsFragment extends Fragment
 
             }
         }
-    };
+    };*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_settings,container,false);
 
-        Switch switch1 = (Switch)view.findViewById(R.id.switch1);
-       Button button_new = (Button)view.findViewById(R.id.button_new);
+        BTN = view.findViewById(R.id.Edit_med);
+        BTN2 =view.findViewById(R.id.Erase_med);
+        button_new = view.findViewById(R.id.button_new);
+
+        switch1 = view.findViewById(R.id.switch1);
+
+        BTA = BluetoothAdapter.getDefaultAdapter();
+
 
         button_new.setOnClickListener(new View.OnClickListener()
         {
@@ -84,15 +97,53 @@ public class SettingsFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b)
             {
-                Toast.makeText(getActivity(),"Principal 2", Toast.LENGTH_SHORT).show();
-                EnableDisableBT();
+                //Toast.makeText(getActivity(),"Principal 2", Toast.LENGTH_SHORT).show();
+                //EnableDisableBT();
             }
         });
+
+        BTN.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                EnableDisableBT();
+                Toast.makeText(act,"ENTRO", Toast.LENGTH_SHORT).show();
+                BTN2.setEnabled(false);
+
+            }
+        });
+
+        BTN2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+            }
+        });
+
+
 
         return view;
     }
 
-    public void EnableDisableBT()
+  /*  @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch(requestCode)
+        {
+            case REQUEST_ENABLE_BT:
+                if(resultCode == RESULT_OK)
+                {
+                    Toast.makeText(getActivity(),"ENCENDIDO",Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }*/
+
+      public void EnableDisableBT()
     {
         if(BTA == null)     //If Bluetooth isn't available
         {
@@ -105,14 +156,14 @@ public class SettingsFragment extends Fragment
             startActivity(EnableBT);
 
             IntentFilter BtIntent = new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
-            getActivity().registerReceiver(mBroadcastReceiver1,BtIntent);
+            //getActivity().registerReceiver(mBroadcastReceiver1,BtIntent);
         }
         if(BTA.isEnabled()) //Disables BT if enabled
         {
             Log.d(TAG, "DISABLE BT");
             BTA.disable();
             IntentFilter BtIntent = new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
-            getActivity().registerReceiver(mBroadcastReceiver1,BtIntent);
+            //getActivity().registerReceiver(mBroadcastReceiver1,BtIntent);
         }
     }
 }

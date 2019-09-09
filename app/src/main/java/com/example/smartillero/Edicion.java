@@ -1,5 +1,6 @@
 package com.example.smartillero;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -174,6 +175,8 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
         //Smart.child("Pacientes").child(id).setValue(Receta);
         Smart.child(name).setValue(Receta);
+
+
     }
 
     public void SaveData()

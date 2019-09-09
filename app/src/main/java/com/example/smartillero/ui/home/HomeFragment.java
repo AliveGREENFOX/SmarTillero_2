@@ -25,12 +25,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeFragment extends Fragment
 {
@@ -39,7 +41,10 @@ public class HomeFragment extends Fragment
     Button Med1, Med2, Med3;
     TextView Texto2;
     EditText pruebaFB;
-    private DatabaseReference Smart;
+    String prueba;
+    private static final String TAG = "HomeFragment";
+    private DatabaseReference Smart, Nombre, Hora;
+    private Query q1;
     private TimePicker clock;
     private AlarmManager alarm;
     public static ArrayList<String> MedsName = new ArrayList<>();
@@ -50,6 +55,9 @@ public class HomeFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_main,container,false);
 
         Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
+        Nombre = Smart.child("Erika BB");
+        Hora = Nombre.child("name");
+        q1 = Smart.orderByChild("Medicamentos");
 
         MedsName = new ArrayList<>();
         Med1 = (Button)view.findViewById(R.id.Med1);
@@ -88,18 +96,27 @@ public class HomeFragment extends Fragment
                 String hora = clock.getCurrentHour().toString();
                 //Texto2.setText(hora);
 
-                Smart.child("Erika BB").addValueEventListener(new ValueEventListener()
+                Hora.addValueEventListener(new ValueEventListener()
                 {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                     {
+                       /* for(DataSnapshot data: dataSnapshot.getChildren())
+                        {
+                            prueba = data.getValue(String.class);
+                            MedsName.add(prueba);
+                        }*/
+                        Log.d(TAG, dataSnapshot.getValue(String.class));
+                        prueba = dataSnapshot.getValue(String.class);
+                        //MedsName.add(prueba);
+                        pruebaFB.setText(prueba);
 
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError)
                     {
-
+                        Log.w(TAG, "onCancelled", databaseError.toException());
                     }
                 });
 
@@ -117,10 +134,11 @@ public class HomeFragment extends Fragment
 
                 // Smart.child("Medicamentos").child("Algo").setValue("Ericka");
 
-                String prueba = pruebaFB.getText().toString();
-                Smart.setValue(prueba);
+                 //prueba = pruebaFB.getText().toString();
+                //Smart.setValue(prueba);
 
-                Readfromdatabase();
+                //Readfromdatabase();
+                ReadMedsNames();
 
             }
         });
@@ -165,20 +183,33 @@ public class HomeFragment extends Fragment
             }
         });
     }
-   /* private HomeViewModel homeViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+    public void ReadMedsNames()
+    {
+        q1.addValueEventListener(new ValueEventListener()
+        {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for(DataSnapshot data: dataSnapshot.getChildren())
+                {
+                    HashMap map = (HashMap) data.getValue();
+
+                   /* if(map != null)
+                    {
+                        prueba = map.get("name");
+                        MedsName.add(map.get("name"));
+                    }*/
+                    prueba = data.getValue(String.class);
+                    MedsName.add(prueba);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
             }
         });
-        return root;
-    }*/
+    }
 }
