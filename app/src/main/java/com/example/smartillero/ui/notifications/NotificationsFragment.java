@@ -131,7 +131,7 @@ public class NotificationsFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-
+                connect();
             }
         });
         /****************************************************************************************************/
@@ -141,8 +141,18 @@ public class NotificationsFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                if (BTS!=null)
+                {
+                    try
+                    {
+                        BTS.getOutputStream().write("1".toString().getBytes());
+                    }
+                    catch (IOException e)
+                    {
+                        Toast.makeText(getActivity(),"Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-                connect();
                 //Set<BluetoothDevice> BTD = BTA.getBondedDevices();//Control de los dispositivos conectados al bluetooth
 
                /* Set<BluetoothDevice> BTD = BTA.getBondedDevices();//Control de los dispositivos conectados al bluetooth
