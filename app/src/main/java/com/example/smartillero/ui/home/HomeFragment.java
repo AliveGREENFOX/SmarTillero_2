@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.smartillero.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,10 +55,11 @@ public class HomeFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main,container,false);
 
+        Smart = FirebaseDatabase.getInstance().getReference();
         Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
-        Nombre = Smart.child("Erika BB");
+        /*Nombre = Smart.child("Erika BB");
         Hora = Nombre.child("name");
-        q1 = Smart.orderByChild("Medicamentos");
+        q1 = Smart.orderByChild("Medicamentos");*/
 
         MedsName = new ArrayList<>();
         Med1 = (Button)view.findViewById(R.id.Med1);
@@ -138,8 +140,9 @@ public class HomeFragment extends Fragment
                 //Smart.setValue(prueba);
 
                 //Readfromdatabase();
-                ReadMedsNames();
-
+               // ReadMedsNames();
+                Readfromdatabase();
+                Arrayadapter.notifyDataSetChanged();
             }
         });
 
@@ -159,8 +162,41 @@ public class HomeFragment extends Fragment
 
     public void Readfromdatabase()
     {
+
+        Smart.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            {
+                for(DataSnapshot ds: dataSnapshot.getChildren())
+                {
+                    String Valor = ds.getValue(String.class);
+                    Texto2.setText(Valor);
+                    //MedsName.add(Valor);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         // Read from the database
-        Smart.addValueEventListener(new ValueEventListener()
+       /* Smart.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -169,7 +205,7 @@ public class HomeFragment extends Fragment
                 // whenever data at this location is updated.
                 //String value = dataSnapshot.getValue(String.class);
 
-                String value = dataSnapshot.child("Erika BB").getValue().toString();
+                String value = dataSnapshot.child("Erika").getValue().toString();
                 Log.d("Valor:", "Value is: " + value);
 
                 Texto2.setText(value);
@@ -181,7 +217,7 @@ public class HomeFragment extends Fragment
                 // Failed to read value
                 Log.w("Valor:", "Failed to read value.", error.toException());
             }
-        });
+        });*/
     }
 
     public void ReadMedsNames()

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnTimeSetListener
 {
@@ -36,6 +37,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
     public static ArrayList<String> Medicamentos_Temporal = new ArrayList<>(); //ARRAY DE PRUEBA
     public static ArrayList<Integer>MedsTimes = new ArrayList<>(); //Array de horas entre cada toma
+    public static HashMap<String,String> data = new HashMap<>();
 
     int Add_Flag = 0;
 
@@ -46,6 +48,8 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
     SharedPreferences SP;
     private DatabaseReference Smart;
     int id_flag = 0;
+    String txt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -111,11 +115,15 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
             @Override
             public void onClick(View view)
             {
-                RegisterMeds();
+
                 Add_Flag = Add_Flag + 1;
-                String txt = Med.getText().toString().trim();
+                txt = Med.getText().toString().trim();
                 String txt_num = Num_Med.getText().toString().trim();
                 String txt_Hours = MedHours.getText().toString().trim();
+
+                data.put("Medicamento", txt);
+                data.put("Numero",txt_num);
+                data.put("Horas",txt_Hours);
 
                 int Txt_num = Integer.parseInt(txt_num); //Convertimos el texto entrante a entero
                 int Txt_Hours = Integer.parseInt(txt_Hours);
@@ -136,6 +144,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
                     //AA.notifyDataSetChanged();
                 }
+                RegisterMeds();
             }
         });
 /////////////////////////////////// Guarda los valores y los pasa a la próxima actividad ///////////////////////////////////////////////////////////////
@@ -174,11 +183,11 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay,pTime);
 
         //Smart.child("Pacientes").child(id).setValue(Receta);
-        Smart.child(name).setValue(Receta);
+        Smart.child(txt).setValue(data);
 
 
     }
-
+/*****************************************************************************************************/
     public void SaveData()
     {
         SP = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
@@ -188,6 +197,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         SPE.putString("TaskList", json);
         SPE.apply();
     }
+    /*****************************************************************************************************/
 
     public void RecoverData()
     {
@@ -197,8 +207,9 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         Type TP = new TypeToken<ArrayList<String>>(){}.getType();
         Medicamentos = gson.fromJson(json, TP);
     }
+    /**************************************Evita que este activo el boton de guardado sin texto***************************************************************/
 
-    private TextWatcher medsTextWatcher = new TextWatcher() //Evita que este activo el boton de guardado sin texto
+    private TextWatcher medsTextWatcher = new TextWatcher()
     {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -217,5 +228,6 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         @Override
         public void afterTextChanged(Editable editable) { }
     };
+/*****************************************************************************************************/
 
 }
