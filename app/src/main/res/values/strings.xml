@@ -39,13 +39,17 @@
     <string name="Bluetooth">Bluetooth</string>
 
     //Edicion
+    <string name="Instructions">A continuacion ingresara información sobre su medicacion, esta será ordenada por tomas,
+    cada toma esta formada por los medicamentos que toma a una misma hora</string>
+    <string name="take_number">Toma numero: </string>
     <string name="med_name">Nombre del medicamento</string>
-    <string name="med_num">Veces que se toma al día</string>
+    <string name="start_hour">Hora a la que prefiere iniciar la toma de sus medicamentos</string>
     <string name="med_time">Cada cuantas horas toma el medicamento</string>
     <string name="capsules">Cuantas pastillas/capsulas toma</string>
 
 
-    <string name="add_med">Añadir</string>
+    <string name="add_take">Añadir Toma</string>
+    <string name="add_med">Añadir Medicamento</string>
     <string name="num_1">1</string>
     <string name="num_2">2</string>
     <string name="num_3">3</string>

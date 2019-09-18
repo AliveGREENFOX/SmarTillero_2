@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -43,15 +46,136 @@ public class MainFragment extends Fragment
      private DatabaseReference Smart;
      private TimePicker clock;
      private AlarmManager alarm;
+    ImageButton Arriba, Abajo, Izquierda, Derecha;
+    ImageView Ar,Ab,Iz,Der, Middle;
+    private static final String TAG = "Main activity";
 
     public static ArrayList<String> MedsName = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main,container,false);
+        View view = inflater.inflate(R.layout.fragment_dashboard,container,false);
 
-       Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
+        Abajo = (ImageButton)view.findViewById(R.id.dwn);
+        Arriba = (ImageButton)view.findViewById(R.id.up);
+        Izquierda = (ImageButton)view.findViewById(R.id.left);
+        Derecha = (ImageButton)view.findViewById(R.id.der);
+
+        Ar = (ImageView)view.findViewById(R.id.imageView5);
+        Iz = (ImageView)view.findViewById(R.id.imageView3);
+        Der = (ImageView)view.findViewById(R.id.imageView4);
+        Ab = (ImageView)view.findViewById(R.id.imageView2);
+        Middle = (ImageView)view.findViewById(R.id.imageView6);
+
+        Ar.setVisibility(View.INVISIBLE);
+        Ab.setVisibility(View.INVISIBLE);
+        Iz.setVisibility(View.INVISIBLE);
+        Der.setVisibility(View.INVISIBLE);
+        Middle.setVisibility(View.VISIBLE);
+
+        Abajo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.VISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.INVISIBLE);
+                }
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
+
+
+        Arriba.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    Ar.setVisibility(View.VISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.INVISIBLE);
+                }
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
+
+        Izquierda.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.VISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.INVISIBLE);
+                }
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
+
+        Derecha.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.VISIBLE);
+                    Middle.setVisibility(View.INVISIBLE);
+                }
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+                {
+                    Ar.setVisibility(View.INVISIBLE);
+                    Ab.setVisibility(View.INVISIBLE);
+                    Iz.setVisibility(View.INVISIBLE);
+                    Der.setVisibility(View.INVISIBLE);
+                    Middle.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
+
+       /*Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
 
 
         MedsName = new ArrayList<>();
@@ -62,9 +186,6 @@ public class MainFragment extends Fragment
         Texto2 =(TextView)view.findViewById(R.id.textView2);
         pruebaFB =(EditText)view.findViewById(R.id.editText3);
         clock = (TimePicker)view.findViewById(R.id.simpleTimePicker);
-
-
-
 
 ///////////////////////////////////////////////////////
 
@@ -109,7 +230,7 @@ public class MainFragment extends Fragment
 
             }
         });
-
+*/
         return view;
     }
     //**************************************************************************************************//
@@ -150,5 +271,7 @@ public class MainFragment extends Fragment
             }
         });
     }
+
+
 
 }

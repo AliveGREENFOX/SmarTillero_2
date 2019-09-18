@@ -60,7 +60,8 @@ public class NotificationsFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_settings,container,false);
 
-        BTN = view.findViewById(R.id.Edit_med);
+        //BTN = view.findViewById(R.id.Edit_med);
+        BTN = view.findViewById(R.id.prueba);
         BTN2 =view.findViewById(R.id.Erase_med);
         button_new = view.findViewById(R.id.button_new);
 

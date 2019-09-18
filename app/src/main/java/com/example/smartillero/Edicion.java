@@ -30,14 +30,21 @@ import java.util.HashMap;
 
 public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnTimeSetListener
 {
-
+    public static ArrayList<String> Tomas = new ArrayList<>();
     public static ArrayList<String> Medicamentos = new ArrayList<>();
-    public static ArrayList<Integer> Numero_Meds = new ArrayList<>();
+    public static ArrayList<Integer> Numero_Medicamentos = new ArrayList<>();
+    public static ArrayList<Integer> Horas_Toma = new ArrayList<>();
+    public static ArrayList<Integer> Hora_Inicio = new ArrayList<>();
+    public static ArrayList<Integer> ID = new ArrayList<>();
+
     private ListView Meds;
 
     public static ArrayList<String> Medicamentos_Temporal = new ArrayList<>(); //ARRAY DE PRUEBA
     public static ArrayList<Integer>MedsTimes = new ArrayList<>(); //Array de horas entre cada toma
     public static HashMap<String,String> data = new HashMap<>();
+
+
+
 
     int Add_Flag = 0;
 
@@ -48,7 +55,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
     SharedPreferences SP;
     private DatabaseReference Smart;
     int id_flag = 0;
-    String txt;
+    String txt, txt_num, txt_Hours;
 
 
     @Override
@@ -60,16 +67,16 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         setSupportActionBar(toolbar);
 
         Smart = FirebaseDatabase.getInstance().getReference("Medicamentos");
-        Add = (Button)findViewById(R.id.AddMed);
-        Save = (Button)findViewById(R.id.save_button);
+        Add = findViewById(R.id.AddMed);
+        Save = findViewById(R.id.save_button);
 
-        Med = (EditText)findViewById(R.id.InputMed);
-        Num_Med = (EditText)findViewById(R.id.InputTimeDay);
-        MedHours = (EditText)findViewById(R.id.InputMedsTime);
-        Med_Caps = (EditText)findViewById(R.id.InputMedsNum);
+        Med = findViewById(R.id.InputMed);
+        Num_Med = findViewById(R.id.InputTimeDay);
+        MedHours = findViewById(R.id.InputMedsTime);
+        Med_Caps = findViewById(R.id.InputMedsNum);
 
 
-        Meds = (ListView)findViewById(R.id.MedsList);
+        Meds = findViewById(R.id.MedsList);
         final ArrayAdapter AA;
 
         AlertDialog.Builder Alerta = new AlertDialog.Builder(this);
@@ -78,6 +85,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         RecoverData(); //Cada vez que guardamos un dato lo recuperamos en el array de prueba "MEDS_NAME"
 
         AA = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,Medicamentos);
+
         if(Medicamentos != null && Medicamentos.size() > 0)
         {
             Meds.setAdapter(AA);
@@ -118,12 +126,12 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
                 Add_Flag = Add_Flag + 1;
                 txt = Med.getText().toString().trim();
-                String txt_num = Num_Med.getText().toString().trim();
-                String txt_Hours = MedHours.getText().toString().trim();
+                txt_num = Num_Med.getText().toString().trim();
+                txt_Hours = MedHours.getText().toString().trim();
 
-                data.put("Medicamento", txt);
+               /* data.put("Medicamento", txt);
                 data.put("Numero",txt_num);
-                data.put("Horas",txt_Hours);
+                data.put("Horas",txt_Hours);*/
 
                 int Txt_num = Integer.parseInt(txt_num); //Convertimos el texto entrante a entero
                 int Txt_Hours = Integer.parseInt(txt_Hours);
@@ -134,17 +142,17 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
                     //Medicamentos_Temporal.add(txt);
                     Med.setText("");
 
-                    //Numero_Meds.add(Txt_num);
+                    Numero_Medicamentos.add(Txt_num);
                     Num_Med.setText("");
 
-                    //MedsTimes.add(Txt_Hours);
+                    MedsTimes.add(Txt_Hours);
                     MedHours.setText("");
 
                     Med_Caps.setText("");
 
                     //AA.notifyDataSetChanged();
                 }
-                RegisterMeds();
+                //RegisterMeds();
             }
         });
 /////////////////////////////////// Guarda los valores y los pasa a la próxima actividad ///////////////////////////////////////////////////////////////
@@ -171,7 +179,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
 
     public void RegisterMeds()  //Sends information to firebase
     {
-       String name = Med.getText().toString();
+     /*  String name = Med.getText().toString();
        String nMeds = Num_Med.getText().toString();
        String tDay = MedHours.getText().toString();
        String pTime = Med_Caps.getText().toString();
@@ -183,7 +191,7 @@ public class Edicion extends AppCompatActivity //implements TimePickerDialog.OnT
         Medicamentos Receta = new Medicamentos(id,name,nMeds,tDay,pTime);
 
         //Smart.child("Pacientes").child(id).setValue(Receta);
-        Smart.child(txt).setValue(data);
+        Smart.child(txt).setValue(data);*/
 
 
     }

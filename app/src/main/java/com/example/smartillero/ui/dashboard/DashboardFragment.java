@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -14,22 +16,51 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.smartillero.R;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment
+{
+    //Button Izquierda, Derecha, Borrar;
+    ImageButton Izquierda, Derecha, Borrar;
+    TextView Texto;
 
-    private DashboardViewModel dashboardViewModel;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
+        Izquierda = (ImageButton) view.findViewById(R.id.izquierda);
+        Derecha = (ImageButton)view.findViewById(R.id.derecha);
+        Borrar = (ImageButton)view.findViewById(R.id.borrar);
+        Texto = (TextView)view.findViewById(R.id.textView5);
+
+        Izquierda.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View view)
+            {
+                Texto.setText("Izquierda");
             }
         });
-        return root;
+
+        Derecha.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Texto.setText("Derecha");
+            }
+        });
+
+        Borrar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Texto.setText("");
+            }
+        });
+
+
+        return view;
     }
+
 }

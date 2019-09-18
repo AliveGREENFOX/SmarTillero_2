@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     private CheckBox R_Info;
     private EditText Nombre;
     private EditText Cont;
+    private TextView resultado;
 
 
     @Override
@@ -38,9 +39,11 @@ public class MainActivity extends AppCompatActivity
 
         Button Ok_Btn = (Button) findViewById(R.id.Btn_Ok);     //Declare buttons
         Button New_Btn = (Button) findViewById(R.id.Btn_New);
+        Button nxtAct = (Button)findViewById(R.id.button);
         Nombre = findViewById(R.id.User);
         Cont = findViewById(R.id.Pass);
         R_Info = (CheckBox) findViewById(R.id.RememberInfo);
+        resultado = (TextView)findViewById(R.id.textView6);
 
 
 
@@ -52,14 +55,14 @@ public class MainActivity extends AppCompatActivity
         CheckSharedPreferences();
 
 
-
+/********************************************************************/
         Ok_Btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
 
-                if(R_Info.isChecked())
+               /* if(R_Info.isChecked())
                 {
                     //Pone el checkbox en positivo
                     mEditor.putString(getString(R.string.Checkbox),"True");
@@ -103,21 +106,54 @@ public class MainActivity extends AppCompatActivity
                 //startActivity(new Intent(MainActivity.this,BasicMenu.class));
 
                 //Intent intent = new Intent(MainActivity.this, BasicMenu.class);
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                Intent intent = new Intent(MainActivity.this, MainFragment.class);
                 int Fragmento = 1;
                 intent.putExtra("Fragmento",Fragmento);
                 startActivity(intent);
                 finish();
+
+             /* String V1 = Nombre.getText().toString();
+              String V2 = Cont.getText().toString();
+
+              int Val_1 = Integer.parseInt(V1);
+              int Val_2 = Integer.parseInt(V2);
+
+              int Resultado = Val_1 + Val_2;
+
+                resultado.setText(Resultado);*/
+
+               resultado.setText("15");
             }
         });
-
+        /*********************************************************/
         New_Btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
+                resultado.setText("");
+                Nombre.setText("");
+                Cont.setText("");
 
+            }
+        });
 
+        /********************************************************************/
+        nxtAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+
+                Log.d(TAG, "BUTTON OK");
+                Toast.makeText(MainActivity.this,"Bienvenido", Toast.LENGTH_LONG).show();
+                //startActivity(new Intent(MainActivity.this,BasicMenu.class));
+
+                //Intent intent = new Intent(MainActivity.this, BasicMenu.class);
+                Intent intent = new Intent(MainActivity.this, MainFragment.class);
+                int Fragmento = 1;
+                intent.putExtra("Fragmento",Fragmento);
+                startActivity(intent);
+                finish();
             }
         });
 
